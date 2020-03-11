@@ -27,21 +27,10 @@ public class Customer {
         String result = "Rental Record for " + get_name() + "\n";
 
         while (rentals.hasMoreElements()) {
-            double thisAmount = 0;
             Rental rental = (Rental) rentals.nextElement();
 
             // determine amounts for rental line
-            switch (rental.get_movie().get_priceCode()) {
-                case Movie.REGULAR:
-                    thisAmount = calculateRegularRentalAmount(rental);
-                    break;
-                case Movie.NEW_RELEASE:
-                    thisAmount = calculateNewReleaseAmount(rental);
-                    break;
-                case Movie.CHILDREN:
-                    thisAmount = calculateChildrenAmount(rental);
-                    break;
-            }
+            double thisAmount = rental.calculateRentalAmount();
 
             // add frequent renter points
             frequentRentalPoints++;
@@ -61,23 +50,4 @@ public class Customer {
         return result;
     }
 
-    private double calculateChildrenAmount(Rental rental) {
-        double thisAmount = 1.5;
-        if (rental.get_daysRented() > 3) {
-            thisAmount += (rental.get_daysRented() - 3) * 1.5;
-        }
-        return thisAmount;
-    }
-
-    private double calculateNewReleaseAmount(Rental rental) {
-        return rental.get_daysRented() * 3;
-    }
-
-    private double calculateRegularRentalAmount(Rental rental) {
-        double thisAmount = 2;
-        if (rental.get_daysRented() > 2) {
-            thisAmount += (rental.get_daysRented() - 2) * 1.5;
-        }
-        return thisAmount;
-    }
 }
