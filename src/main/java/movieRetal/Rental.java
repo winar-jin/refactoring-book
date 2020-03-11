@@ -12,4 +12,12 @@ public class Rental {
     double calculateRentalAmount() {
         return _movie.calculateMovieAmount(get_daysRented());
     }
+
+    int addFrequentPoints(int frequentRentalPoints) {
+        frequentRentalPoints++;
+        if (_movie instanceof NewReleaseMovie && get_daysRented() > 1) {
+            frequentRentalPoints++;
+        }
+        return frequentRentalPoints;
+    }
 }

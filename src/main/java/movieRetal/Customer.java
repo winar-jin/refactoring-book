@@ -29,15 +29,9 @@ public class Customer {
         while (rentals.hasMoreElements()) {
             Rental rental = (Rental) rentals.nextElement();
 
-            // determine amounts for rental line
             double thisAmount = rental.calculateRentalAmount();
 
-            // add frequent renter points
-            frequentRentalPoints++;
-            // add bonus for a two day new release rental
-            if (rental.get_movie().get_priceCode() == Movie.NEW_RELEASE && rental.get_daysRented() > 1) {
-                frequentRentalPoints++;
-            }
+            frequentRentalPoints = rental.addFrequentPoints(frequentRentalPoints);
 
             // show figures for this rental
             result += "\t" + rental.get_movie().get_title() + "\t" + thisAmount + "\n";
