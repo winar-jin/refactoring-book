@@ -23,25 +23,37 @@ public class Customer {
         double totalAmount = 0;
         int frequentRentalPoints = 0;
         final Enumeration rentals = _rentals.elements();
+        StringBuilder result = new StringBuilder();
 
-        String result = "Rental Record for " + get_name() + "\n";
+        addHeaderToStatement(result);
 
         while (rentals.hasMoreElements()) {
             Rental rental = (Rental) rentals.nextElement();
 
-            double thisAmount = rental.calculateRentalAmount();
-
             frequentRentalPoints = rental.addFrequentPoints(frequentRentalPoints);
+            double rentalAmount = rental.calculateRentalAmount();
+            totalAmount += rentalAmount;
 
-            // show figures for this rental
-            result += "\t" + rental.get_movie().get_title() + "\t" + thisAmount + "\n";
-            totalAmount += thisAmount;
+            addRentalToStatement(result, rental, rentalAmount);
         }
 
-        // add footer lines
-        result += "Amount owed is " + totalAmount + "\n";
-        result += "You earned " + frequentRentalPoints + " frequent rental points";
-        return result;
+        addFooterToStatement(totalAmount, frequentRentalPoints, result);
+
+        return result.toString();
+    }
+
+    private void addFooterToStatement(double totalAmount, int frequentRentalPoints, StringBuilder result) {
+        result.append("Amount owed is ").append(totalAmount).append("\n");
+        result.append("You earned ").append(frequentRentalPoints).append(" frequent rental points");
+    }
+
+    private void addRentalToStatement(StringBuilder result, Rental rental, double thisAmount) {
+        result.append("\t").append(rental.get_movie().get_title()).append("\t").append(thisAmount).append("\n");
+    }
+
+    private void addHeaderToStatement(StringBuilder result) {
+        result.append("Rental Record for ")
+              .append(get_name()).append("\n").toString();
     }
 
 }
