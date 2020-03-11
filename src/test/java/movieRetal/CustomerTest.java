@@ -12,9 +12,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 class CustomerTest {
 
-    private final Movie starWar = new Movie("Star War", Movie.REGULAR);
-    private final Movie tomJack = new Movie("Tom and Jack", Movie.CHILDREN);
-    private final Movie joker = new Movie("Joker", Movie.NEW_RELEASE);
+    private final Movie starWar = new RegularMovie("Star War");
+    private final Movie tomJack = new ChildrenMovie("Tom and Jack");
+    private final Movie joker = new NewReleaseMovie("Joker");
 
     @Test
     void should_show_statements_when_customer_want_to_see_it() throws IOException {
