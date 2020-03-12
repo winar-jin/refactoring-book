@@ -26,27 +26,8 @@ public class Customer {
 
         String result = "Rental Record for " + get_name() + "\n";
         while (rentals.hasMoreElements()) {
-            double thisAmount = 0;
             Rental each = (Rental) rentals.nextElement();
-
-            // determine amounts for each line
-            switch (each.get_movie().get_priceCode()) {
-                case Movie.REGULAR:
-                    thisAmount += 2;
-                    if (each.get_daysRented() > 2) {
-                        thisAmount += (each.get_daysRented() - 2) * 1.5;
-                    }
-                    break;
-                case Movie.NEW_RELEASE:
-                    thisAmount += each.get_daysRented() * 3;
-                    break;
-                case Movie.CHILDREN:
-                    thisAmount += 1.5;
-                    if (each.get_daysRented() > 3) {
-                        thisAmount += (each.get_daysRented() - 3) * 1.5;
-                    }
-                    break;
-            }
+            double thisAmount = calculateARental(each);
 
             // add frequent renter points
             frequentRentalPoints++;
@@ -56,13 +37,35 @@ public class Customer {
             }
 
             // show figures for this rental
-            result += "\t" + each.get_movie().get_title() + "\t" + String.valueOf(thisAmount) + "\n";
+            result += "\t" + each.get_movie().get_title() + "\t" + thisAmount + "\n";
             totalAmount += thisAmount;
         }
 
         // add footer lines
-        result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-        result += "You earned " + String.valueOf(frequentRentalPoints) + " frequent rental points";
+        result += "Amount owed is " + totalAmount + "\n";
+        result += "You earned " + frequentRentalPoints + " frequent rental points";
         return result;
+    }
+
+    private double calculateARental(Rental each) {
+        double thisAmount = 0;
+        switch (each.get_movie().get_priceCode()) {
+            case Movie.REGULAR:
+                thisAmount += 2;
+                if (each.get_daysRented() > 2) {
+                    thisAmount += (each.get_daysRented() - 2) * 1.5;
+                }
+                break;
+            case Movie.NEW_RELEASE:
+                thisAmount += each.get_daysRented() * 3;
+                break;
+            case Movie.CHILDREN:
+                thisAmount += 1.5;
+                if (each.get_daysRented() > 3) {
+                    thisAmount += (each.get_daysRented() - 3) * 1.5;
+                }
+                break;
+        }
+        return thisAmount;
     }
 }
