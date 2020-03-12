@@ -49,7 +49,7 @@ public class Customer {
         int totalFrequentPoints = 0;
         while (rentals.hasMoreElements()) {
             final Rental rental = (Rental) rentals.nextElement();
-            totalFrequentPoints += rental.calculateFrequentPoints();
+            totalFrequentPoints += rental.getFrequentPoint();
         }
         return totalFrequentPoints;
     }

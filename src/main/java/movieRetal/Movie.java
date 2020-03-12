@@ -38,4 +38,11 @@ public class Movie {
         }
         return thisAmount;
     }
+
+    int getFrequentPoint(int daysRented, Rental rental) {
+        if (rental.get_movie().get_priceCode() == NEW_RELEASE && daysRented > 1) {
+            return 2;
+        }
+        return 1;
+    }
 }
