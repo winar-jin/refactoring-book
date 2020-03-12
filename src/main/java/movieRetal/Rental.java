@@ -14,6 +14,6 @@ public class Rental {
     }
 
     int getFrequentPoint() {
-        return _movie.getFrequentPoint(get_daysRented(), this);
+        return _movie.getFrequentPoint(get_daysRented());
     }
 }

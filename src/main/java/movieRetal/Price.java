@@ -4,6 +4,10 @@ abstract class Price {
     abstract int getPriceCode();
 
     abstract double getCharge(int daysRented);
+
+    int getFrequentPoint(int daysRented) {
+        return 1;
+    }
 }
 
 class ChildrenPrice extends Price {
@@ -31,6 +35,14 @@ class NewReleasePrice extends Price {
     @Override
     double getCharge(int daysRented) {
         return daysRented * 3;
+    }
+
+    @Override
+    int getFrequentPoint(int daysRented) {
+        if (daysRented > 1) {
+            return 2;
+        }
+        return 1;
     }
 }
 
