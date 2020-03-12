@@ -26,7 +26,7 @@ public class Customer {
 
         while (rentals.hasMoreElements()) {
             Rental each = (Rental) rentals.nextElement();
-            result += "\t" + each.get_movie().get_title() + "\t" + each.calculateARental() + "\n";
+            result += "\t" + each.get_movie().get_title() + "\t" + each.getCharge() + "\n";
         }
 
         result += "Amount owed is " + calculateTotalAmount() + "\n";
@@ -39,7 +39,7 @@ public class Customer {
         double totalAmount = 0;
         while (rentals.hasMoreElements()) {
             final Rental rental = (Rental) rentals.nextElement();
-            totalAmount += rental.calculateARental();
+            totalAmount += rental.getCharge();
         }
         return totalAmount;
     }
