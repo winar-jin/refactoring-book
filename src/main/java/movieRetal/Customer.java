@@ -20,26 +20,37 @@ public class Customer {
     }
 
     public String statement() {
-        double totalAmount = 0;
-        int frequentRentalPoints = 0;
         final Enumeration rentals = _rentals.elements();
 
         String result = "Rental Record for " + get_name() + "\n";
+
         while (rentals.hasMoreElements()) {
             Rental each = (Rental) rentals.nextElement();
-
-            double thisAmount = each.calculateARental();
-            frequentRentalPoints += each.calculateFrequentPoints();
-
-            // show figures for this rental
-            result += "\t" + each.get_movie().get_title() + "\t" + thisAmount + "\n";
-            totalAmount += thisAmount;
+            result += "\t" + each.get_movie().get_title() + "\t" + each.calculateARental() + "\n";
         }
 
-        // add footer lines
-        result += "Amount owed is " + totalAmount + "\n";
-        result += "You earned " + frequentRentalPoints + " frequent rental points";
+        result += "Amount owed is " + calculateTotalAmount() + "\n";
+        result += "You earned " + calculateTotalFrequentPoints() + " frequent rental points";
         return result;
     }
 
+    private double calculateTotalAmount() {
+        final Enumeration rentals = _rentals.elements();
+        double totalAmount = 0;
+        while (rentals.hasMoreElements()) {
+            final Rental rental = (Rental) rentals.nextElement();
+            totalAmount += rental.calculateARental();
+        }
+        return totalAmount;
+    }
+
+    private int calculateTotalFrequentPoints() {
+        final Enumeration rentals = _rentals.elements();
+        int totalFrequentPoints = 0;
+        while (rentals.hasMoreElements()) {
+            final Rental rental = (Rental) rentals.nextElement();
+            totalFrequentPoints += rental.calculateFrequentPoints();
+        }
+        return totalFrequentPoints;
+    }
 }
