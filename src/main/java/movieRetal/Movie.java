@@ -1,10 +1,7 @@
 package movieRetal;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
-@AllArgsConstructor
 public class Movie {
     public static final int CHILDREN = 2;
     public static final int REGULAR = 0;
@@ -13,13 +10,32 @@ public class Movie {
     @Getter
     private String _title;
 
-    @Getter
-    @Setter
-    private int _priceCode;
+    private Price price;
+
+    public Movie(String _title, int price) {
+        this._title = _title;
+        setPrice(price);
+    }
+
+    private void setPrice(int priceCode) {
+        switch (priceCode) {
+            case CHILDREN:
+                price = new ChildrenPrice();
+                break;
+            case REGULAR:
+                price = new RegularPrice();
+                break;
+            case NEW_RELEASE:
+                price = new NewReleasePrice();
+                break;
+            default:
+                throw new IllegalArgumentException("Incorrect Price Code");
+        }
+    }
 
     double getCharge(int daysRented) {
         double thisAmount = 0;
-        switch (get_priceCode()) {
+        switch (getPrice()) {
             case REGULAR:
                 thisAmount += 2;
                 if (daysRented > 2) {
@@ -39,8 +55,12 @@ public class Movie {
         return thisAmount;
     }
 
+    private int getPrice() {
+        return price.getPriceCode();
+    }
+
     int getFrequentPoint(int daysRented, Rental rental) {
-        if (rental.get_movie().get_priceCode() == NEW_RELEASE && daysRented > 1) {
+        if (rental.get_movie().getPrice() == NEW_RELEASE && daysRented > 1) {
             return 2;
         }
         return 1;
