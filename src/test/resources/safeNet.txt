@@ -1,0 +1,6 @@
+Rental Record for Mike
+	Star War	14.0
+	Tom and Jack	27.0
+	Joker	90.0
+Amount owed is 131.0
+You earned 4 frequent rental points
